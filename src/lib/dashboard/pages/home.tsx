@@ -1,4 +1,5 @@
 import { CreateProjectModal } from "../components/ProjectCreateForm"
+import { ProjectsTable } from "../components/ProjectsTable"
 
 const HomePage = () => {
     return (
@@ -7,6 +8,10 @@ const HomePage = () => {
 
             <div className="mt-5">
                 <CreateProjectModal />
+            </div>
+
+            <div className="mt-5">
+                <ProjectsTable />
             </div>
         </div>
     )

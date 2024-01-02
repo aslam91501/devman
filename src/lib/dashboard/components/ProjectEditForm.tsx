@@ -1,42 +1,46 @@
 import { useRef } from 'react';
-import { Modal, Input, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea } from '@nextui-org/react';
+import { Modal, Input, Button, ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea } from '@nextui-org/react';
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import useProjectMutation from '../hooks/projectMutation';
+import { Project } from '../models';
 
-export const CreateProjectModal = () => {
-    const title = 'Create Project';
-    const { onClose, onOpen, isOpen, onOpenChange } = useDisclosure();
+
+interface Props{
+    data: Project,
+    isOpen: boolean,
+    onClose: () => void,
+}
+
+export const EditProjectModal = (props: Props) => {
+    const title = 'Update Project';
     const submitButtonRef = useRef<HTMLButtonElement>(null);
-    
-    const createProjectSchema = z.object({
+    const { onClose, isOpen, data: project} = props;
+
+    const updateProjectSchema = z.object({
         title: z.string().min(3),
         description: z.string().min(10),
     })
 
-    type Schema = z.infer<typeof createProjectSchema>;
+    type Schema = z.infer<typeof updateProjectSchema>;
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<Schema>({
-        resolver: zodResolver(createProjectSchema)
+        resolver: zodResolver(updateProjectSchema),
+        defaultValues: project
     })
 
-    const { createProject } = useProjectMutation({ onClose, reset });
+    const { updateProject } = useProjectMutation({ onClose, reset });
 
     
     function submitData(data: Schema){
-        createProject(data);
+        updateProject({ id: project.id, ...data });
     }
     
     return <>
-        <Button variant="flat" className="bg-primary text-white" onPress={onOpen}>
-            Create Project
-        </Button>
-
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            onOpenChange={onOpenChange}
             title={title}
             className='max-h-screen overflow-y-auto'
         >
@@ -66,7 +70,7 @@ export const CreateProjectModal = () => {
                             Close
                         </Button>
                         <Button color="primary" onPress={() => {submitButtonRef.current?.click();}}>
-                            Create Project
+                            Update Project
                         </Button>
                     </ModalFooter>
                 </>
