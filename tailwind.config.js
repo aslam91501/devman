@@ -17,6 +17,9 @@ export default {
     themes: {
       light: {
         colors: { primary: { DEFAULT: "#16a34a" } }
+      },
+      dark: {
+        colors: { primary: { DEFAULT: "#16a34a" } }
       }
     }
   })],
