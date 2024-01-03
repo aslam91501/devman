@@ -8,6 +8,7 @@ const usePageData = (config?: Config) => {
     const [searchParams] = useSearchParams();
 
     const page = searchParams.get('page') as unknown as number ?? 1;
+    const size = searchParams.get('size') as unknown as number ?? 10;
     const search = searchParams.get('search') ?? undefined;
     const sort = searchParams.get('sort') ?? 'updated';
     const direction = searchParams.get('direction') ?? 'descending';
@@ -15,6 +16,7 @@ const usePageData = (config?: Config) => {
 
     return {
         page,
+        size,
         search,
         sort,
         direction,

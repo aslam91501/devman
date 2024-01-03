@@ -9,9 +9,9 @@ const Layout = () => {
 
     return (
         <div className="flex flex-col min-h-screen w-screen bg-slate-100">
-            <nav className="border-b-1 flex items-center justify-center gap-8 h-10 text-sm bg-white">
-                <Link href="/home" color="primary">Home</Link>
-                <Link href="/logout" color="danger">Logout</Link>
+            <nav className="border-b-1 flex items-center justify-center gap-8 h-10 text-sm bg-white font-mono uppercase">
+                <Link href="/home" color="primary" >Home</Link>
+                <Link href="/logout" color="danger" >Logout</Link>
             </nav>
             <Outlet></Outlet>
         </div>

@@ -1,16 +1,24 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import pb from "../../shared/config/pb";
 import { toast } from "react-toastify";
+import usePageData from "../../shared/hooks/usePageData";
 
 
 
 
 interface MutationRequest{
     onClose?: () => void,
-    reset?: () => void
+    reset?: () => void,
+    queryKey?: string[],
 }
 
 const useProjectMutation = (mutationRequest: MutationRequest) => {
+    const queryClient = useQueryClient();
+
+    const { page, search, size, sort, direction } = usePageData();
+    const queryKey = ['projects', page, size, sort, direction, search];
+
+
     interface CreateRequest{
         description: string;
         title: string;
@@ -24,6 +32,7 @@ const useProjectMutation = (mutationRequest: MutationRequest) => {
                 autoClose: 1000
             })
 
+            queryClient.invalidateQueries({ queryKey })
             if(mutationRequest.reset) mutationRequest.reset();
             if(mutationRequest.onClose) mutationRequest.onClose();  
         },
@@ -51,6 +60,7 @@ const useProjectMutation = (mutationRequest: MutationRequest) => {
                 autoClose: 1000
             })
 
+            queryClient.invalidateQueries({ queryKey })
             if(mutationRequest.reset) mutationRequest.reset();
             if(mutationRequest.onClose) mutationRequest.onClose();  
         },
@@ -71,6 +81,7 @@ const useProjectMutation = (mutationRequest: MutationRequest) => {
                 autoClose: 1000
             })
 
+            queryClient.invalidateQueries({ queryKey })
             if(mutationRequest.reset) mutationRequest.reset();
             if(mutationRequest.onClose) mutationRequest.onClose();  
         },

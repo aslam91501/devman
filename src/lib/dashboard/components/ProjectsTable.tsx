@@ -1,92 +1,25 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { PageRequest, Page } from "../../shared/config/baseModels";
 import { useState } from "react";
 import { Paginator } from "../../shared/components/Paginator";
-import pb from "../../shared/config/pb";
-import { Project } from "../models";
 import { EditProjectModal } from "./ProjectEditForm";
 import { ProjectDeleteModal } from "./ProjectDeleteModal";
+import usePageData from "../../shared/hooks/usePageData";
+import getProjects from "../hooks/getProjects";
+import useMultiModal from "../../shared/hooks/useMultiModal";
 
 
-export async function fetch(request: PageRequest, search?: string) {
-    let sort = request.sort;
 
-    sort = (request.direction === 'ascending') ? sort : `-${sort}`;
-
-    if (typeof search === 'string') {
-        return await pb.collection('projects').getList(request.pageNo, request.size ?? 10, {
-            sort: sort,
-            filter: `name~"${search}"`
-        });
-    }
-    else {
-        return await pb.collection('projects').getList(request.pageNo, request.size ?? 10, {
-            sort: sort,
-        });
-    }
-}
 
 export function ProjectsTable() {
-    const [searchParams] = useSearchParams();
-
-    const page = searchParams.get('page') as unknown as number ?? 1;
-    const search = searchParams.get('search') ?? undefined;
-    const sort = searchParams.get('sort') ?? 'updated';
-    const direction = searchParams.get('direction') ?? 'descending';
-
+    const { page, search } = usePageData();
     const [searchValue, setSearchValue] = useState(search ?? "");
+    const { isOpen: editModalOpen, toggle: toggleEditModal } = useMultiModal();
+    const { isOpen: deleteModalOpen, toggle: toggleDeleteModal } = useMultiModal();
+    const { projects, loading, error, queryKey, handleSearch } = getProjects();
 
-    const { data, isLoading, isError, isFetching } = useQuery({
-        queryKey: ['amenities', page, search, sort, direction],
-        queryFn: () => fetch({ pageNo: page, sort, direction }, search),
-        placeholderData: keepPreviousData
-    });
 
-    const [editModalOpen, setEditModalOpen] = useState<Map<string, boolean>>(new Map<string, boolean>());
-    const [deleteModalOpen, setDeleteModalOpen] = useState<Map<string, boolean>>(new Map<string, boolean>());
-
-    function toggleEditModal(id: string) {
-        setEditModalOpen((prev) => {
-            const newState = new Map(prev);
-
-            newState.set(id, !prev.get(id));
-
-            return newState;
-        });
-    }
-
-    function toggleDeleteModal(id: string) {
-        setDeleteModalOpen((prev) => {
-            const newState = new Map(prev);
-
-            newState.set(id, !prev.get(id));
-
-            return newState;
-        });
-    }
-
-    const navigate = useNavigate();
-    const currentRoute = useLocation().pathname.replace(/\/+$/, '');
-
-    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-
-        const search = formData.get('search') as string;
-
-        navigate({
-            pathname: currentRoute,
-            search: `?page=${page}&search=${search}&sort=${sort}&direction=${direction}`,
-        }, { replace: true });
-    }
-
-    if (isLoading || isFetching) return <>Loading...</>;
-
-    if (isError) return <>Could not fetch data</>;
-
+    if (loading) return <>Loading...</>;
+    if (error) return <>Could not fetch data</>;
     return <>
         <Table
             topContent={
@@ -99,7 +32,7 @@ export function ProjectsTable() {
                     </form>
                 </>
             }
-            bottomContent={<Paginator currentPage={page} totalPages={(data as unknown as Page<Project>).totalPages} />}>
+            bottomContent={<Paginator currentPage={page} totalPages={projects.totalPages} />}>
             <TableHeader>
                 <TableColumn>Title</TableColumn>
                 <TableColumn>Description</TableColumn>
@@ -108,7 +41,7 @@ export function ProjectsTable() {
                 <TableColumn>Actions</TableColumn>
             </TableHeader>
             <TableBody>
-                {data ? (data as unknown as Page<Project>).items.map((item, index) => {
+                {projects ? projects.items.map((item, index) => {
                     return <TableRow key={index}>
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.description}</TableCell>

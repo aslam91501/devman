@@ -14,13 +14,13 @@ export default {
   },
   darkMode: "class",
   plugins: [nextui({
-    themes: {
-      light: {
-        colors: { primary: { DEFAULT: "#16a34a" } }
-      },
-      dark: {
-        colors: { primary: { DEFAULT: "#16a34a" } }
-      }
-    }
+    // themes: {
+    //   light: {
+    //     colors: { primary: { DEFAULT: "#16a34a" } }
+    //   },
+    //   dark: {
+    //     colors: { primary: { DEFAULT: "#16a34a" } }
+    //   }
+    // }
   })],
 }
