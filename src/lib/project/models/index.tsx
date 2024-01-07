@@ -5,3 +5,9 @@ export interface Feature extends RecordBase{
     description: string,
     project: string
 }
+
+export interface SubFeature extends RecordBase{
+    name: string,
+    description: string,
+    feature: string
+}

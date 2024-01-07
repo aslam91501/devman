@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import pb from "../../shared/config/pb";
 import { toast } from "react-toastify";
 import usePageData from "../../shared/hooks/usePageData";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 interface MutationRequest{
@@ -11,11 +11,10 @@ interface MutationRequest{
     queryKey?: string[],
 }
 
-const useFeatureMutation = (mutationRequest: MutationRequest) => {
+const useSubFeatureMutation = (mutationRequest: MutationRequest) => {
     const queryClient = useQueryClient();
-    const { pid } = useParams();
-    const queryKey = ['features', pid];
-    const navigate = useNavigate();
+    const { fid } = useParams();
+    const queryKey = ['sub_features', fid];
 
 
     interface CreateRequest{
@@ -23,8 +22,8 @@ const useFeatureMutation = (mutationRequest: MutationRequest) => {
         name: string;
     }
 
-    const { mutate: createFeature  } = useMutation({
-        mutationFn: (createRequest: CreateRequest) => pb.collection('features').create({  project: pid!, ...createRequest }),
+    const { mutate: createSubFeature  } = useMutation({
+        mutationFn: (createRequest: CreateRequest) => pb.collection('sub_features').create({  feature: fid!, ...createRequest }),
         onSuccess: () => {
             toast.success('Success', {
                 theme: 'colored',
@@ -51,8 +50,8 @@ const useFeatureMutation = (mutationRequest: MutationRequest) => {
         name?: string;
     }
 
-    const { mutate: updateFeature  } = useMutation({
-        mutationFn: (updateRequest: UpdateRequest) => pb.collection('features').update(updateRequest.id, updateRequest),
+    const { mutate: updateSubFeature  } = useMutation({
+        mutationFn: (updateRequest: UpdateRequest) => pb.collection('sub_features').update(updateRequest.id, updateRequest),
         onSuccess: () => {
             toast.success('Success', {
                 theme: 'colored',
@@ -72,8 +71,8 @@ const useFeatureMutation = (mutationRequest: MutationRequest) => {
     })
 
 
-    const { mutate: deleteFeature  } = useMutation({
-        mutationFn: (id: string) => pb.collection('features').delete(id),
+    const { mutate: deleteSubFeature  } = useMutation({
+        mutationFn: (id: string) => pb.collection('sub_features').delete(id),
         onSuccess: () => {
             toast.success('Deleted', {
                 theme: 'colored',
@@ -82,8 +81,7 @@ const useFeatureMutation = (mutationRequest: MutationRequest) => {
 
             queryClient.invalidateQueries({ queryKey })
             if(mutationRequest.reset) mutationRequest.reset();
-            if(mutationRequest.onClose) mutationRequest.onClose();
-            navigate(`/p/${pid}/f`);
+            if(mutationRequest.onClose) mutationRequest.onClose();  
         },
         onError: () => {
             toast.error('Something went wrong', {
@@ -98,10 +96,10 @@ const useFeatureMutation = (mutationRequest: MutationRequest) => {
 
 
     return {
-        createFeature,
-        updateFeature,
-        deleteFeature
+        createSubFeature,
+        updateSubFeature,
+        deleteSubFeature
     }
 }
 
-export default useFeatureMutation
+export default useSubFeatureMutation
