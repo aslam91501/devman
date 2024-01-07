@@ -6,6 +6,7 @@ import { ProjectDeleteModal } from "./ProjectDeleteModal";
 import usePageData from "../../shared/hooks/usePageData";
 import getProjects from "../hooks/getProjects";
 import useMultiModal from "../../shared/hooks/useMultiModal";
+import {format} from 'timeago.js'
 
 
 
@@ -15,7 +16,7 @@ export function ProjectsTable() {
     const [searchValue, setSearchValue] = useState(search ?? "");
     const { isOpen: editModalOpen, toggle: toggleEditModal } = useMultiModal();
     const { isOpen: deleteModalOpen, toggle: toggleDeleteModal } = useMultiModal();
-    const { projects, loading, error, queryKey, handleSearch } = getProjects();
+    const { projects, loading, error, handleSearch } = getProjects();
 
 
     if (loading) return <>Loading...</>;
@@ -45,8 +46,8 @@ export function ProjectsTable() {
                     return <TableRow key={index}>
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.description}</TableCell>
-                        <TableCell>{item.created.toString()}</TableCell>
-                        <TableCell>{item.updated.toString()}</TableCell>
+                        <TableCell>{format(item.created)}</TableCell>
+                        <TableCell>{format(item.updated)}</TableCell>
                         <TableCell>
                             <EditProjectModal 
                                 data={item}

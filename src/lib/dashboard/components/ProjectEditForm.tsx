@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import {  useRef } from 'react';
 import { Modal, Input, Button, ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea } from '@nextui-org/react';
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -27,7 +27,6 @@ export const EditProjectModal = (props: Props) => {
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<Schema>({
         resolver: zodResolver(updateProjectSchema),
-        defaultValues: project
     })
 
     const { updateProject } = useProjectMutation({ onClose, reset });
@@ -54,12 +53,14 @@ export const EditProjectModal = (props: Props) => {
                                 label="Title"
                                 isInvalid={!!errors.title}
                                 errorMessage={errors.title?.message}
+                                defaultValue={project.title}
                                 {...register("title")}
                             />
                             <Textarea
                                 label="Description"
                                 isInvalid={!!errors.description}         
                                 errorMessage={errors.description?.message}
+                                defaultValue={project.description}
                                 {...register("description")}
                             />
                             <button type="submit" value="asdf" className='invisible h-0 w-0' ref={submitButtonRef} />

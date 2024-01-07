@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LoginPage } from "./lib/auth/pages/login";
 import HomePage from "./lib/dashboard/pages/home";
 import Layout from "./lib/shared/layout";
+import FeatureListPage from "./lib/project/pages/feature-list";
+import ProjectLayout from "./lib/project/layout";
 
 function App() {
 	const navigate = useNavigate();
@@ -14,7 +16,14 @@ function App() {
 		<NextUIProvider navigate={navigate}>
 			<Routes>
 				<Route element={<Layout />}>
+					<Route path="/p/:pid" element={<ProjectLayout />}>
+						<Route path="f/:fid" element={<FeatureListPage />}>
+							
+						</Route>
+					</Route>
+
 					<Route path="/home" element={<HomePage />} />
+
 				</Route>
 				<Route>
 					<Route path="/login" element={<LoginPage />} />

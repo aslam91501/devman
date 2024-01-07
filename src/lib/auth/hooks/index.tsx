@@ -26,14 +26,14 @@ export const useAuth = () => {
         },
     })
     
-    const { data: loginStateInfo, isLoading: authStateLoading, isFetching: authStateFetching } = useQuery({
-        queryKey: ['isLoggedIn'],
-        retry: 1,
-        queryFn: () => pb.authStore.isValid,
-    })
+    // const { data: loginStateInfo, isLoading: authStateLoading, isFetching: authStateFetching } = useQuery({
+    //     queryKey: ['isLoggedIn'],
+    //     retry: 1,
+    //     queryFn: () => pb.authStore.isValid,
+    // })
 
-    const isLoggedIn = !!loginStateInfo;
-    const loading = authStateLoading || authStateFetching;
+    const isLoggedIn = pb.authStore.isValid;
+    // const loading = authStateLoading || authStateFetching;
 
 
     const redirectIfLoggedIn = () => {
@@ -59,6 +59,6 @@ export const useAuth = () => {
         redirectIfLoggedIn,
         redirectIfUnauthenticated,
         logout,
-        loading,
+        // loading,
     }
 }
