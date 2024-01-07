@@ -4,19 +4,20 @@ import { LiaStickyNoteSolid } from "react-icons/lia";
 import { CiBoxList } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 
 const ProjectLayout = () => {
     const path = useLocation().pathname;
+    const {pid} = useParams();
 
     const active = (link: string) => path.startsWith(link)
     
     const links = [
-        { name: 'Features', icon: <GoRocket size={24} />, link: '/features'},
-        { name: 'Task List', icon: <CiBoxList size={24} />, link: '/list'},
-        { name: 'Bugs', icon: <GoBug size={24} />, link: '/bugs'},
-        { name: 'Notes', icon: <LiaStickyNoteSolid size={24} />, link: '/notes'},
-        { name: 'Settings', icon: <IoSettingsOutline size={24} />, link: '/settings'}
+        { name: 'Features', icon: <GoRocket size={24} />, link: `/p/${pid}/f`},
+        { name: 'Task List', icon: <CiBoxList size={24} />, link: `/p/${pid}/l`},
+        { name: 'Bugs', icon: <GoBug size={24} />, link: `/p/${pid}/b`},
+        { name: 'Notes', icon: <LiaStickyNoteSolid size={24} />, link: `/p/${pid}/n`},
+        { name: 'Settings', icon: <IoSettingsOutline size={24} />, link: `/p/${pid}/s`}
     ]
 
     return (

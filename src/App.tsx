@@ -7,6 +7,7 @@ import HomePage from "./lib/dashboard/pages/home";
 import Layout from "./lib/shared/layout";
 import FeatureListPage from "./lib/project/pages/feature-list";
 import ProjectLayout from "./lib/project/layout";
+import ProjectIndexPage from "./lib/project/pages/project-index";
 
 function App() {
 	const navigate = useNavigate();
@@ -17,8 +18,10 @@ function App() {
 			<Routes>
 				<Route element={<Layout />}>
 					<Route path="/p/:pid" element={<ProjectLayout />}>
+						<Route index element={<ProjectIndexPage />} />
+						<Route path="f" element={<FeatureListPage />} />
 						<Route path="f/:fid" element={<FeatureListPage />}>
-							
+
 						</Route>
 					</Route>
 

@@ -1,4 +1,4 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { useState } from "react";
 import { Paginator } from "../../shared/components/Paginator";
 import { EditProjectModal } from "./ProjectEditForm";
@@ -64,6 +64,7 @@ export function ProjectsTable() {
                                     <Button color="default">Actions</Button>
                                 </DropdownTrigger>
                                 <DropdownMenu>
+                                    <DropdownItem href={`/p/${item.id}`}>View</DropdownItem>
                                     <DropdownItem onClick={() => toggleEditModal(item.id)}>Edit</DropdownItem>
                                     <DropdownItem 
                                         onClick={() => toggleDeleteModal(item.id)}
