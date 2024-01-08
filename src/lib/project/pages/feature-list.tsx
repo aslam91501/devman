@@ -81,7 +81,7 @@ const FeatureListPage = () => {
                     disabled={loading}  
                     onChange={(e) => handleSelect(e)}>
                     <SelectSection title="Actions">
-                        <SelectItem key="new_feature">New Feature</SelectItem>
+                        <SelectItem key="new_feature" className={featureSelected ? "hidden" : ""}>New Feature</SelectItem>
                         <SelectItem key="new_sub_feature" className={!featureSelected ? "hidden" : ""}>New Sub-Feature </SelectItem>
                     </SelectSection>
                     <SelectSection title="Features">
