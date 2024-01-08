@@ -4,37 +4,38 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
 import useFeatureMutation from '../hooks/useFeatureMutation';
-import { Feature } from '../models';
+import { Feature, SubFeature } from '../models';
+import useSubFeatureMutation from '../hooks/useSubFeatureMutation';
 
 
 
 interface Props{
     isOpen: boolean,
     onClose: () => void,
-    data: Feature
+    data: SubFeature
 }
 
-export const UpdateFeatureModal = (props: Props) => {
-    const title = 'Update Feature';
+export const UpdateSubFeatureModal = (props: Props) => {
+    const title = 'Update Sub-Feature';
     const submitButtonRef = useRef<HTMLButtonElement>(null);
     const { onClose, isOpen } = props;
 
-    const updateFeatureSchema = z.object({
+    const updateSubFeatureSchema = z.object({
         name: z.string().min(3),
         description: z.string().min(10),
     })
 
-    type Schema = z.infer<typeof updateFeatureSchema>;
+    type Schema = z.infer<typeof updateSubFeatureSchema>;
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<Schema>({
-        resolver: zodResolver(updateFeatureSchema),
+        resolver: zodResolver(updateSubFeatureSchema),
     })
 
-    const { updateFeature } = useFeatureMutation({ onClose, reset });
+    const { updateSubFeature } = useSubFeatureMutation({ onClose, reset });
 
     
     function submitData(data: Schema){
-        updateFeature({ id: props.data.id, ...data });
+        updateSubFeature({ id: props.data.id, ...data });
     }
     
     return <>
@@ -72,7 +73,7 @@ export const UpdateFeatureModal = (props: Props) => {
                             Close
                         </Button>
                         <Button color="primary" onPress={() => {submitButtonRef.current?.click();}}>
-                            Update Feature
+                            Update Sub-Feature
                         </Button>
                     </ModalFooter>
                 </>

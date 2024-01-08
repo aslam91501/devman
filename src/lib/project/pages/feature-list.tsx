@@ -15,7 +15,7 @@ const FeatureListPage = () => {
     const { subFeatures, loading: subFeaturesLoading, error: subFeaturesError } = getSubFeatures();
 
     const path = useLocation().pathname;
-    const {pid, fid} = useParams();
+    const {pid, fid, sfid} = useParams();
     const featureSelected = path.startsWith(`/p/${pid}/f/`) && path !== `/p/${pid}/f/`;
     const [feature, setFeature] = useState<Feature>();
 
@@ -112,6 +112,7 @@ const FeatureListPage = () => {
                 <Listbox className="px-5">
                     { subFeatures?.map((subFeature) => {
                         return <ListboxItem 
+                            
                             key={subFeature.id} 
                             href={`/p/${pid}/f/${fid}/sf/${subFeature.id}`}
                             description={subFeature.description}>

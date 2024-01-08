@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import pb from "../../shared/config/pb";
 import { toast } from "react-toastify";
 import usePageData from "../../shared/hooks/usePageData";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 interface MutationRequest{
@@ -13,7 +13,8 @@ interface MutationRequest{
 
 const useSubFeatureMutation = (mutationRequest: MutationRequest) => {
     const queryClient = useQueryClient();
-    const { fid } = useParams();
+    const { fid,pid } = useParams();
+    const navigate = useNavigate();
     const queryKey = ['sub_features', fid];
 
 
@@ -82,6 +83,7 @@ const useSubFeatureMutation = (mutationRequest: MutationRequest) => {
             queryClient.invalidateQueries({ queryKey })
             if(mutationRequest.reset) mutationRequest.reset();
             if(mutationRequest.onClose) mutationRequest.onClose();  
+            navigate(`/p/${pid}/f/${fid}`)
         },
         onError: () => {
             toast.error('Something went wrong', {

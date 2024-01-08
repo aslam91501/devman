@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import pb from "../../shared/config/pb";
 import { useQuery } from "@tanstack/react-query";
-import { Feature } from "../models";
+import { SubFeature } from "../models";
 
 const getSubFeatures = (featureId?: string) => {
     const {fid} = useParams();
@@ -15,7 +15,7 @@ const getSubFeatures = (featureId?: string) => {
         enabled: (!!id)
     })
 
-    const subFeatures = data as unknown as Feature[];
+    const subFeatures = data as unknown as SubFeature[];
     const loading = isLoading || isFetching;
 
     return { subFeatures, loading, error }

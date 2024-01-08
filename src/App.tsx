@@ -8,6 +8,7 @@ import Layout from "./lib/shared/layout";
 import FeatureListPage from "./lib/project/pages/feature-list";
 import ProjectLayout from "./lib/project/layout";
 import ProjectIndexPage from "./lib/project/pages/project-index";
+import SubFeatureLayout from "./lib/project/layout/subfeature";
 
 function App() {
 	const navigate = useNavigate();
@@ -21,7 +22,7 @@ function App() {
 						<Route index element={<ProjectIndexPage />} />
 						<Route path="f" element={<FeatureListPage />} />
 						<Route path="f/:fid" element={<FeatureListPage />}>
-
+							<Route path="sf/:sfid" element={<SubFeatureLayout />} />
 						</Route>
 					</Route>
 
