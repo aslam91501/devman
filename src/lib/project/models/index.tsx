@@ -11,3 +11,12 @@ export interface SubFeature extends RecordBase{
     description: string,
     feature: string
 }
+
+export interface Item extends RecordBase{
+    name: string,
+    done: boolean,
+    type: ItemType
+    subfeature: string
+}
+
+export type ItemType = 'todo' | 'test' | 'business';

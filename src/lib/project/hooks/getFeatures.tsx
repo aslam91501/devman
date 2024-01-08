@@ -9,7 +9,9 @@ const getFeatures = (projectId?: string) => {
 
     const { data, isLoading, isFetching, isError: error } = useQuery({
         queryKey: ['features', id],
-        queryFn: () => pb.collection('features').getFullList({ projectId: id })
+        queryFn: () => pb.collection('features').getFullList({ 
+            filter: `project="${id}"`,
+         })
     })
 
     const features = data as unknown as Feature[];
