@@ -75,22 +75,22 @@ const FeatureListPage = () => {
         <div className="basis-80 bg-white border">
             <div className="pt-7 px-5">
                 <Skeleton isLoaded={!loading} >
-                <Select
-                    selectedKeys={[selection]} 
-                    label="Select Feature" 
-                    disabled={loading}  
-                    onChange={(e) => handleSelect(e)}>
-                    <SelectSection title="Actions">
-                        <SelectItem key="new_feature" className={featureSelected ? "hidden" : ""}>New Feature</SelectItem>
-                        <SelectItem key="new_sub_feature" className={!featureSelected ? "hidden" : ""}>New Sub-Feature </SelectItem>
-                    </SelectSection>
-                    <SelectSection title="Features">
-                        { features?.map((feature) => <SelectItem key={feature.id}>
-                                {feature.name}
-                            </SelectItem> 
-                        )}
-                    </SelectSection>
-                </Select>
+                    <Select
+                        selectedKeys={[selection]} 
+                        label="Select Feature" 
+                        disabled={loading}  
+                        onChange={(e) => handleSelect(e)}>
+                        <SelectSection title="Actions">
+                            <SelectItem key="new_feature" className={featureSelected ? "hidden" : ""}>New Feature</SelectItem>
+                            <SelectItem key="new_sub_feature" className={!featureSelected ? "hidden" : ""}>New Sub-Feature </SelectItem>
+                        </SelectSection>
+                        <SelectSection title="Features">
+                            { features?.map((feature) => <SelectItem key={feature.id}>
+                                    {feature.name}
+                                </SelectItem> 
+                            )}
+                        </SelectSection>
+                    </Select>
                 </Skeleton>
             </div>
 

@@ -20,3 +20,14 @@ export interface Item extends RecordBase{
 }
 
 export type ItemType = 'todo' | 'test' | 'business';
+
+export interface Bug extends RecordBase{
+    title: string,
+    description: string,
+    project: string,
+    feature?: string,
+    status: BugStatus,
+    photos?: string[]
+}
+
+export type BugStatus = 'resolved' | 'unresolved' | 'triage';
