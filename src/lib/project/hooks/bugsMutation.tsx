@@ -52,10 +52,11 @@ const useBugsMutation = (mutationRequest: MutationRequest) => {
         id: string;
         description?: string;
         title?: string;
+        feature?: string;
     }
 
-    const { mutate: updateProject  } = useMutation({
-        mutationFn: (updateRequest: UpdateRequest) => pb.collection('projects').update(updateRequest.id, updateRequest),
+    const { mutate: updateBug  } = useMutation({
+        mutationFn: (updateRequest: UpdateRequest) => pb.collection('bugs').update(updateRequest.id, updateRequest),
         onSuccess: () => {
             toast.success('Success', {
                 theme: 'colored',
@@ -75,8 +76,8 @@ const useBugsMutation = (mutationRequest: MutationRequest) => {
     })
 
 
-    const { mutate: deleteProject  } = useMutation({
-        mutationFn: (id: string) => pb.collection('projects').delete(id),
+    const { mutate: deleteBug  } = useMutation({
+        mutationFn: (id: string) => pb.collection('bugs').delete(id),
         onSuccess: () => {
             toast.success('Deleted', {
                 theme: 'colored',
@@ -101,8 +102,8 @@ const useBugsMutation = (mutationRequest: MutationRequest) => {
 
     return {
         createBug,
-        updateProject,
-        deleteProject
+        updateBug,
+        deleteBug
     }
 }
 

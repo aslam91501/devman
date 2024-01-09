@@ -1,12 +1,12 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { useState } from "react";
 import { Paginator } from "../../shared/components/Paginator";
-import { EditProjectModal } from "./ProjectEditForm";
-import { ProjectDeleteModal } from "./ProjectDeleteModal";
 import usePageData from "../../shared/hooks/usePageData";
 import getBugs from "../hooks/getBugs";
 import useMultiModal from "../../shared/hooks/useMultiModal";
 import {format} from 'timeago.js'
+import { EditBugModal } from "./EditBugForm.tsx";
+import { BugDeleteModal } from "./BugDeleteModal";
 
 
 
@@ -16,7 +16,7 @@ export function BugsTable() {
     const [searchValue, setSearchValue] = useState(search ?? "");
     const { isOpen: editModalOpen, toggle: toggleEditModal } = useMultiModal();
     const { isOpen: deleteModalOpen, toggle: toggleDeleteModal } = useMultiModal();
-    const { projects, loading, error, handleSearch } = getBugs();
+    const { bugs, loading, error, handleSearch } = getBugs();
 
 
     if (loading) return <>Loading...</>;
@@ -33,7 +33,7 @@ export function BugsTable() {
                     </form>
                 </>
             }
-            bottomContent={<Paginator currentPage={page} totalPages={projects.totalPages} />}>
+            bottomContent={<Paginator currentPage={page} totalPages={bugs.totalPages} />}>
             <TableHeader>
                 <TableColumn>Title</TableColumn>
                 <TableColumn>Description</TableColumn>
@@ -42,19 +42,19 @@ export function BugsTable() {
                 <TableColumn>Actions</TableColumn>
             </TableHeader>
             <TableBody>
-                {projects ? projects.items.map((item, index) => {
+                {bugs ? bugs.items.map((item, index) => {
                     return <TableRow key={index}>
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.description}</TableCell>
                         <TableCell>{format(item.created)}</TableCell>
                         <TableCell>{format(item.updated)}</TableCell>
                         <TableCell>
-                            <EditProjectModal 
+                            <EditBugModal 
                                 data={item}
                                 onClose={() => toggleEditModal(item.id)}
                                 isOpen={editModalOpen.get(item.id) ?? false} />
 
-                            <ProjectDeleteModal 
+                            <BugDeleteModal 
                                 data={item}
                                 onClose={() => toggleDeleteModal(item.id)}
                                 isOpen={deleteModalOpen.get(item.id) ?? false} />

@@ -1,4 +1,5 @@
 import { CreateBugModal } from "../components/BugCreateForm"
+import { BugsTable } from "../components/BugsTable"
 
 const BugsIndexPage = () => {
     return <>
@@ -7,6 +8,10 @@ const BugsIndexPage = () => {
 
         <div className="mt-4">
             <CreateBugModal />
+        </div>
+
+        <div className="mt-4">
+            <BugsTable />
         </div>
     </div>
     </>

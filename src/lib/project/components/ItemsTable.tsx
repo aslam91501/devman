@@ -4,6 +4,7 @@ import {format} from 'timeago.js'
 import getItems from "../hooks/getItems";
 import { Item, ItemType } from "../models";
 import useItemMutation from "../hooks/useItemMutation";
+import classNames from "classnames";
 
 
 interface Props{
@@ -93,7 +94,10 @@ export function ItemsTable(props: Props) {
             </TableHeader>
             <TableBody emptyContent={<p>No content</p>}>
                 {filteredItems?.map((item) => {
-                    return <TableRow key={item.id} className={item.done && hideDone ? "hidden" : "" }>
+                    return <TableRow key={item.id} 
+                            className={classNames({ "hidden": item.done && hideDone, "bg-slate-200": item.done })}
+                            // className={item.done && hideDone ? "hidden" : "" }
+                        >
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.done ? "Yes" : "No"}</TableCell>
                         <TableCell>{format(item.created)}</TableCell>
