@@ -18,7 +18,7 @@ export function ItemsTable(props: Props) {
     const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set([]));
     const [hideDone, setHideDone] = useState(false);
 
-    const itemMutation = useItemMutation({});
+    const itemMutation = useItemMutation({ reset: () => setSelectedKeys(new Set([])) });
 
 
     useEffect(() => {

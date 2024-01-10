@@ -1,4 +1,4 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Select, SelectItem, Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { useState } from "react";
 import { Paginator } from "../../shared/components/Paginator";
 import usePageData from "../../shared/hooks/usePageData";
@@ -7,21 +7,42 @@ import useMultiModal from "../../shared/hooks/useMultiModal";
 import {format} from 'timeago.js'
 import { EditBugModal } from "./EditBugForm.tsx";
 import { BugDeleteModal } from "./BugDeleteModal";
+import { BugStatusModal } from "./BugStatusModal.tsx";
+import { useNavigate, useParams } from "react-router-dom";
+import getFeatures from "../hooks/getFeatures.tsx";
 
 
 
 
 export function BugsTable() {
     const { page, search } = usePageData();
+    const {pid} = useParams();
     const [searchValue, setSearchValue] = useState(search ?? "");
     const { isOpen: editModalOpen, toggle: toggleEditModal } = useMultiModal();
     const { isOpen: deleteModalOpen, toggle: toggleDeleteModal } = useMultiModal();
+    const { isOpen: statusModalOpen, toggle: toggleStatusModal } = useMultiModal();
     const { bugs, loading, error, handleSearch } = getBugs();
+    const { features, loading: featuresLoading, error: featuresError } = getFeatures();
 
 
     if (loading) return <>Loading...</>;
     if (error) return <>Could not fetch data</>;
     return <>
+        {!featuresError &&
+        <Skeleton isLoaded={!featuresLoading} >
+            <Select
+                className="w-60 my-5"
+                label="Select Feature" 
+                disabled={featuresLoading}>
+                { features?.map((feature) => <SelectItem key={feature.id}>
+                        {feature.name}
+                    </SelectItem> 
+                )}
+            </Select>
+        </Skeleton>
+        }
+        {featuresError && <span>Could not load features</span>}
+
         <Table
             topContent={
                 <>
@@ -37,15 +58,17 @@ export function BugsTable() {
             <TableHeader>
                 <TableColumn>Title</TableColumn>
                 <TableColumn>Description</TableColumn>
+                <TableColumn>Status</TableColumn>
                 <TableColumn>Created</TableColumn>
                 <TableColumn>Updated</TableColumn>
                 <TableColumn>Actions</TableColumn>
             </TableHeader>
             <TableBody>
                 {bugs ? bugs.items.map((item, index) => {
-                    return <TableRow key={index}>
+                    return <TableRow key={item.id}>
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.description}</TableCell>
+                        <TableCell className="capitalize">{item.status}</TableCell>
                         <TableCell>{format(item.created)}</TableCell>
                         <TableCell>{format(item.updated)}</TableCell>
                         <TableCell>
@@ -53,6 +76,11 @@ export function BugsTable() {
                                 data={item}
                                 onClose={() => toggleEditModal(item.id)}
                                 isOpen={editModalOpen.get(item.id) ?? false} />
+
+                            <BugStatusModal 
+                                data={item}
+                                onClose={() => toggleStatusModal(item.id)}
+                                isOpen={statusModalOpen.get(item.id) ?? false} />
 
                             <BugDeleteModal 
                                 data={item}
@@ -64,8 +92,9 @@ export function BugsTable() {
                                     <Button color="default">Actions</Button>
                                 </DropdownTrigger>
                                 <DropdownMenu>
-                                    <DropdownItem href={`/p/${item.id}`}>View</DropdownItem>
+                                    <DropdownItem href={`/p/${pid}/b/${item.id}`}>View</DropdownItem>
                                     <DropdownItem onClick={() => toggleEditModal(item.id)}>Edit</DropdownItem>
+                                    <DropdownItem onClick={() => toggleStatusModal(item.id)}>Set Status</DropdownItem>
                                     <DropdownItem 
                                         onClick={() => toggleDeleteModal(item.id)}
                                         color="danger" 

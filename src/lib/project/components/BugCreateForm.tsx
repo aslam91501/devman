@@ -33,7 +33,7 @@ export const CreateBugModal = () => {
 
     
     function submitData(data: Schema){
-        createBug({ ...data, project: pid! });
+        createBug({ ...data, project: pid!, status: 'unresolved' });
     }
     
     return <>
