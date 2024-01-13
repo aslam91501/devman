@@ -8,7 +8,7 @@ import CustomTitle from "../../shared/components/CustomTitle";
 const ProjectIndexPage = () => {
     const { project, loading, error } = getProjetById();
     const { items, error: itemsError, loading: itemsLoading } = getItemsByProject();
-    const { features, error: featuresError, loading: featuresLoading } = getFeatures();
+    const { features, loading: featuresLoading } = getFeatures();
 
     if (loading) return <><CustomTitle title="" loading prefix="P" /></>
     if (error) return <><CustomTitle title="" error prefix="P" /></>

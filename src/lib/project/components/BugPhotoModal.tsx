@@ -20,7 +20,7 @@ export const BugPhotoModal = (props: Props) => {
             className='max-h-screen overflow-y-auto z-[1000]'
         >
             <ModalContent>
-                {(onClose) => (
+                {() => (
                 <>
                     <ModalHeader>{title}</ModalHeader>
                     <ModalBody>

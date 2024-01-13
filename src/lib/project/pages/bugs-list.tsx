@@ -1,4 +1,3 @@
-import CustomTitle from "../../shared/components/CustomTitle"
 import { CreateBugModal } from "../components/BugCreateForm"
 import { BugsTable } from "../components/BugsTable"
 

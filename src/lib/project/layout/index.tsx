@@ -1,6 +1,5 @@
 import { Link, Tooltip } from "@nextui-org/react";
 import { GoBug, GoRocket } from "react-icons/go";
-import { LiaStickyNoteSolid } from "react-icons/lia";
 import { CiBoxList } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 

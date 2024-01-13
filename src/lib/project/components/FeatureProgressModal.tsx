@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 export const FeatureProgressModal = () => {
     const { items, loading, error } = getItemsByFeature();
-    const { subFeatures, loading: subFeaturesLoading, error: subFeaturesError } = getSubFeatures();
+    const { subFeatures, loading: subFeaturesLoading } = getSubFeatures();
 
     const title = 'Feature Progress';
     const { onClose, onOpen, isOpen, onOpenChange } = useDisclosure();
@@ -31,7 +31,7 @@ export const FeatureProgressModal = () => {
             size='4xl'
         >
             <ModalContent>
-                {(onClose) => (
+                {() => (
                 <>
                     <ModalHeader>{title}</ModalHeader>
                     <ModalBody className='pb-10'>

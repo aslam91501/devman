@@ -13,7 +13,7 @@ import getAllItems from "../hooks/getAllItems.tsx";
 
 export function AllItemsTable() {
     const {pid} = useParams();
-    const { page, search } = usePageData();
+    const { search } = usePageData();
     const [searchValue, setSearchValue] = useState(search ?? "");
     const { features, loading: featuresLoading, error: featuresError } = getFeatures();
     const { items, loading, error, handleSearch } = getAllItems();
@@ -79,7 +79,7 @@ export function AllItemsTable() {
                 <TableColumn>Actions</TableColumn>
             </TableHeader>
             <TableBody>
-                {items ? items.items.map((item, index) => {
+                {items ? items.items.map((item) => {
                     return <TableRow key={item.id}>
                         <TableCell>{item.name}</TableCell>
                         <TableCell className="capitalize">{item.done ? "Done" : "Not Done"}</TableCell>

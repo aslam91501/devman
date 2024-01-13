@@ -8,7 +8,6 @@ import getSubFeatures from "../hooks/getSubFeatures";
 import { UpdateFeatureModal } from "../components/UpdateFeatureModal";
 import { Feature } from "../models";
 import { FeatureDeleteModal } from "../components/FeatureDeleteModal";
-import { set } from "zod";
 import { FeatureProgressModal } from "../components/FeatureProgressModal";
 import CustomTitle from "../../shared/components/CustomTitle";
 
@@ -17,7 +16,7 @@ const FeatureListPage = () => {
     const { subFeatures, loading: subFeaturesLoading, error: subFeaturesError } = getSubFeatures();
 
     const path = useLocation().pathname;
-    const {pid, fid, sfid} = useParams();
+    const {pid, fid} = useParams();
     const featureSelected = path.startsWith(`/p/${pid}/f/`) && path !== `/p/${pid}/f/`;
     const [feature, setFeature] = useState<Feature>();
 

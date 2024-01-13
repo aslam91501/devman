@@ -1,6 +1,6 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { forwardRef } from "react";
-import { Feature, SubFeature } from "../models";
+import {  SubFeature } from "../models";
 import useSubFeatureMutation from "../hooks/useSubFeatureMutation";
 
 interface Props{
@@ -24,7 +24,7 @@ export const SubFeatureDeleteModal = forwardRef(function(props: Props, ref: any)
             onClose={props.onClose}
         >
             <ModalContent>
-                {(onClose) => (
+                {() => (
                     <>
                         <ModalHeader>{title}</ModalHeader>
                         <ModalBody>

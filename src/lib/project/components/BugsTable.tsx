@@ -1,4 +1,4 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Link, Select, SelectItem, Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, Select, SelectItem, Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { useState } from "react";
 import { Paginator } from "../../shared/components/Paginator";
 import usePageData from "../../shared/hooks/usePageData";
@@ -8,9 +8,8 @@ import {format} from 'timeago.js'
 import { EditBugModal } from "./EditBugForm.tsx";
 import { BugDeleteModal } from "./BugDeleteModal";
 import { BugStatusModal } from "./BugStatusModal.tsx";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import getFeatures from "../hooks/getFeatures.tsx";
-import { BugStatus } from "../models/index.tsx";
 import CustomTitle from "../../shared/components/CustomTitle.tsx";
 
 
@@ -90,7 +89,7 @@ export function BugsTable() {
                 <TableColumn>Actions</TableColumn>
             </TableHeader>
             <TableBody>
-                {bugs ? bugs.items.map((item, index) => {
+                {bugs ? bugs.items.map((item) => {
                     return <TableRow key={item.id}>
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.description}</TableCell>

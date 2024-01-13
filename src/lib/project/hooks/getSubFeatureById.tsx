@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import pb from "../../shared/config/pb";
 import { useQuery } from "@tanstack/react-query";
-import { Feature, SubFeature } from "../models";
+import {  SubFeature } from "../models";
 
 const getSubFeatureById = (subfeatureId?: string) => {
     const {sfid} = useParams();

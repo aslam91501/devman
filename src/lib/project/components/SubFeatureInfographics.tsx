@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Item } from "../models"
-import getItems from "../hooks/getItems";
 import { Card, CardBody, CircularProgress, Progress, Skeleton } from "@nextui-org/react";
 
 interface Props{

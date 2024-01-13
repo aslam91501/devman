@@ -24,7 +24,7 @@ export const ProjectDeleteModal = forwardRef(function(props: Props, ref: any) {
             onClose={props.onClose}
         >
             <ModalContent>
-                {(onClose) => (
+                {() => (
                     <>
                         <ModalHeader>{title}</ModalHeader>
                         <ModalBody>

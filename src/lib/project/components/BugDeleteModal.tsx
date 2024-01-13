@@ -1,7 +1,6 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { forwardRef } from "react";
-import useFeatureMutation from "../hooks/useFeatureMutation";
-import { Bug, Feature } from "../models";
+import { Bug } from "../models";
 import useBugsMutation from "../hooks/bugsMutation";
 
 interface Props{
@@ -25,7 +24,7 @@ export const BugDeleteModal = forwardRef(function(props: Props, ref: any) {
             onClose={props.onClose}
         >
             <ModalContent>
-                {(onClose) => (
+                {() => (
                     <>
                         <ModalHeader>{title}</ModalHeader>
                         <ModalBody>

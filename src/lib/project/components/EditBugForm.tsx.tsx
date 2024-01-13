@@ -3,7 +3,6 @@ import { Modal, Input, Button, ModalContent, ModalHeader, ModalBody, ModalFooter
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";
-import useFeatureMutation from '../hooks/useFeatureMutation';
 import { Bug } from '../models';
 import getFeatures from '../hooks/getFeatures';
 import useBugsMutation from '../hooks/bugsMutation';

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import pb from "../../shared/config/pb";
 import { toast } from "react-toastify";
 import usePageData from "../../shared/hooks/usePageData";
-import { Bug, BugStatus } from "../models";
+import { BugStatus } from "../models";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 
@@ -18,7 +18,7 @@ const useBugsMutation = (mutationRequest: MutationRequest) => {
     const queryClient = useQueryClient();
 
     const { page, search, size, sort, direction } = usePageData();
-    const [params, setParams] = useSearchParams();
+    const [params] = useSearchParams();
     const feature = params.get('feature');
     const status = params.get('status');
     
@@ -90,7 +90,7 @@ const useBugsMutation = (mutationRequest: MutationRequest) => {
 
     const { mutate: deleteBug  } = useMutation({
         mutationFn: (id: string) => pb.collection('bugs').delete(id),
-        onSuccess: (bug) => {
+        onSuccess: () => {
             toast.success('Deleted', {
                 theme: 'colored',
                 autoClose: 1000

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Modal, Input, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea, Skeleton, Select, SelectSection, SelectItem } from '@nextui-org/react';
+import { Modal, Input, Button, useDisclosure, ModalContent, ModalHeader, ModalBody, ModalFooter, Textarea, Skeleton, Select, SelectItem } from '@nextui-org/react';
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod";

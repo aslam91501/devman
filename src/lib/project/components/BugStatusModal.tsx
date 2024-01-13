@@ -29,7 +29,7 @@ export const BugStatusModal = (props: Props) => {
             className='max-h-screen overflow-y-auto  w-64 py-5 px-3'
         >
             <ModalContent>
-                {(onClose) => (
+                {() => (
                 <>
                     <ModalHeader>{title}</ModalHeader>
                     <ModalBody>

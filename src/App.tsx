@@ -1,5 +1,5 @@
 import { NextUIProvider } from "@nextui-org/react"
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginPage } from "./lib/auth/pages/login";
@@ -40,6 +40,8 @@ function App() {
 				<Route>
 					<Route path="/login" element={<LoginPage />} />
 				</Route>
+
+				<Route path="/" element={<Navigate to={'/home'} />} />
 			</Routes>
 			<ToastContainer />
 		</NextUIProvider>

@@ -2,8 +2,8 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Page, PageRequest } from "../../shared/config/baseModels";
 import pb from "../../shared/config/pb";
 import usePageData from "../../shared/hooks/usePageData";
-import { Bug, BugStatus, Item, SubFeature } from "../models";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Item, SubFeature } from "../models";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const getAllItems = () => {
     const {pid} = useParams();

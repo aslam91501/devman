@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import pb from "../../shared/config/pb";
 import { toast } from "react-toastify";
-import usePageData from "../../shared/hooks/usePageData";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ItemType } from "../models";
 
 
@@ -16,7 +15,6 @@ const useItemMutation = (mutationRequest: MutationRequest) => {
     const queryClient = useQueryClient();
     const { sfid } = useParams();
     const queryKey = ['items', sfid];
-    const navigate = useNavigate();
 
 
     interface CreateRequest{
