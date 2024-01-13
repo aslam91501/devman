@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Page, PageRequest } from "../../shared/config/baseModels";
 import pb from "../../shared/config/pb";
 import usePageData from "../../shared/hooks/usePageData";
-import { Bug, BugStatus, Item } from "../models";
+import { Bug, BugStatus, Item, SubFeature } from "../models";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const getAllItems = () => {
@@ -25,7 +25,8 @@ const getAllItems = () => {
        
         return await pb.collection('items').getList(request.pageNo, request.size ?? 10, {
             sort: sort,
-            filter: filterString
+            filter: filterString,
+            expand: 'subfeature'
         })  
     }
 
@@ -37,19 +38,21 @@ const getAllItems = () => {
         queryFn: () => fetch({ pageNo: page, sort, direction }, search, 
             { 
                 feature: feature !== null ? feature : undefined, 
-                done: done == 'true' || done == 'false' ? done as unknown as boolean: undefined  
+                done: done == 'true' || done == 'false' ? done as unknown as boolean: undefined 
             }),
         placeholderData: keepPreviousData
     });
 
-    const items = data as unknown as Page<Item>;
+    interface ExpandedItem extends Item{
+        expand: {
+            subfeature: SubFeature
+        }
+    }
+
+    const items = data as unknown as Page<ExpandedItem>;
     const loading = isLoading || isFetching;
     const error = isError;
 
-
-
-    const navigate = useNavigate();
-    const currentRoute = useLocation().pathname.replace(/\/+$/, '');
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

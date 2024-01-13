@@ -1,4 +1,4 @@
-import { Button, Input, Select, SelectItem, Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Button, Input, Link, Select, SelectItem, Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { useState } from "react";
 import { Paginator } from "../../shared/components/Paginator.tsx";
 import usePageData from "../../shared/hooks/usePageData.tsx";
@@ -12,6 +12,7 @@ import getAllItems from "../hooks/getAllItems.tsx";
 
 
 export function AllItemsTable() {
+    const {pid} = useParams();
     const { page, search } = usePageData();
     const [searchValue, setSearchValue] = useState(search ?? "");
     const { features, loading: featuresLoading, error: featuresError } = getFeatures();
@@ -85,9 +86,12 @@ export function AllItemsTable() {
                         <TableCell>{format(item.created)}</TableCell>
                         <TableCell>{format(item.updated)}</TableCell>
                         <TableCell>
-                            <Button variant="light" color="default">View</Button>
+                            <Button variant="flat" color="primary"
+                                as={Link}
+                                href={`/p/${pid}/f/${item.expand.subfeature.feature}/sf/${item.expand.subfeature.id}`}
+                                target="_blank">View</Button>
                         </TableCell>
-                    </TableRow>;
+                    </TableRow>
                 }) : <></>}
             </TableBody>
         </Table>
