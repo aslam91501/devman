@@ -1,14 +1,15 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Tab, Tabs, useDisclosure } from "@nextui-org/react"
+import { Button, Card, CardBody, CardFooter, CardHeader, Skeleton, Tab, Tabs, useDisclosure } from "@nextui-org/react"
 import { UpdateSubFeatureModal } from "../components/UpdateSubFeatureModal";
 import { SubFeatureDeleteModal } from "../components/SubFeatureDeleteModal";
 import getSubFeatureById from "../hooks/getSubFeatureById";
 import { ItemsTable } from "../components/ItemsTable";
 import ProgressInfographics from "../components/SubFeatureInfographics";
 import getItems from "../hooks/getItems";
+import CustomTitle from "../../shared/components/CustomTitle";
 
 const SubFeatureLayout = () => {
     const { subFeature, loading, error } = getSubFeatureById();
-    const { items, error: itemsError } = getItems();
+    const { items, error: itemsError, loading: itemsLoading } = getItems();
 
     const { 
         isOpen: editFeatureModalOpen, 
@@ -25,15 +26,17 @@ const SubFeatureLayout = () => {
 
 
 
-    if(loading) return <>Loading</>
-    if(error) return <>Error</>
+    if(loading) return <><CustomTitle title="" prefix="SF" loading /> Loading</>
+    if(error) return <><CustomTitle title="" prefix="SF" error /> Error</>
 
     return <>
+        <CustomTitle title={ subFeature.name } prefix="SF" />
+        
         <div className="pt-5 px-10 flex flex-col items-center h-full w-full">
             <Tabs variant="bordered" color="primary" radius="sm" classNames={{ tabList: 'bg-white' }}>
                 <Tab key="home" title="Home" className="w-full h-full">
-                    <div className="flex flex-col justify-center mt-5 px-20">
-                        <Card className="text-left p-3" shadow="sm">
+                    <div className="flex flex-col justify-center mt-5 px-20 pb-10">
+                        <Card className="text-left p-3" shadow="md">
                             <CardHeader>
                                 <h1 className="text-xl font-medium">{ subFeature.name }</h1>
                             </CardHeader>
@@ -55,7 +58,27 @@ const SubFeatureLayout = () => {
 
                         <UpdateSubFeatureModal data={subFeature!} isOpen={editFeatureModalOpen} onClose={editFeatureModalOnClose} />
                         <SubFeatureDeleteModal data={subFeature!} isOpen={deleteFeatureModalOpen} onClose={deleteFeatureModalOnClose} />
-                    
+                       
+                       <div className="mt-10 flex gap-5 items-center">
+                            <Card  shadow="md" className={`flex-grow`}>
+                                <Skeleton isLoaded={!itemsLoading}>
+                                    <CardBody className="flex flex-col items-center justify-center gap-3 py-5">
+                                        <span>Items</span>
+                                        <h1 className="font-medium text-xl">{items?.length}</h1>
+                                    </CardBody>
+                                </Skeleton>
+                            </Card>
+
+                            <Card  shadow="md" className={`flex-grow`}>
+                                <Skeleton isLoaded={!itemsLoading}>
+                                    <CardBody className="flex flex-col items-center justify-center gap-3 py-5">
+                                        <span>Items Done</span>
+                                        <h1 className="font-medium text-xl">{items?.filter(i => i.done)?.length}</h1>
+                                    </CardBody>
+                                </Skeleton>
+                            </Card>
+                        </div>
+                        
                         <ProgressInfographics isError={itemsError} items={items} />
                     </div>
                 </Tab>

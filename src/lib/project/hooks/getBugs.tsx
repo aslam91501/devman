@@ -3,11 +3,10 @@ import { Page, PageRequest } from "../../shared/config/baseModels";
 import pb from "../../shared/config/pb";
 import usePageData from "../../shared/hooks/usePageData";
 import { Bug, BugStatus } from "../models";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const getBugs = () => {
     const { page, search, size, sort, direction } = usePageData();
-    const asdf = usePageData();
     const [params, setParams] = useSearchParams();
     const feature = params.get('feature');
     const status = params.get('status');
@@ -64,44 +63,16 @@ const getBugs = () => {
     const error = isError;
 
 
-
-    const navigate = useNavigate();
-    const currentRoute = useLocation().pathname.replace(/\/+$/, '');
-
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
         const search = formData.get('search') as string;
-        console.log(params)
-
-        let searchString = `?page=${page}&search=${search}&sort=${sort}&direction=${direction}&size=${size}`;
-        if (feature) {
-            searchString += `&feature=${feature}`;
-        }
-
-        navigate({
-            pathname: currentRoute,
-            search: searchString,
-        }, { replace: true });
-    }
-
-    const handleFilter = (filters : { feature?: string, status?: BugStatus }) => {
-        let searchString = `?page=${page}&search=${search ?? ""}&sort=${sort}&direction=${direction}&size=${size}`;
         
-        if (filters.feature) {
-            searchString += `&feature=${filters.feature}`;
-        } else { if(feature) searchString += `&feature=${feature}` };
-
-        if (filters.status) {
-            searchString += `&status=${filters.status}`;
-        } else { if(status) searchString += `&status=${status}` };
-
-        navigate({
-            pathname: currentRoute,
-            search: searchString,
-        }, { replace: true });
+        params.set('search', search)
+        setParams(params);
     }
+
 
     
     return {
@@ -110,7 +81,6 @@ const getBugs = () => {
         error,
         queryKey,
         handleSearch,
-        handleFilter
     }
 }
 

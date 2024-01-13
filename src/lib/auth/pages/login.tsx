@@ -1,6 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks";
+import CustomTitle from "../../shared/components/CustomTitle";
 
 export const LoginPage = () => {
     const auth = useAuth();
@@ -28,9 +29,10 @@ export const LoginPage = () => {
         auth.attemptLogin({ email: formData.email, password: formData.password })
     };
 
-    if(auth.loading) return <>Loading...</>
+    // if(auth.loading) return <>Loading...</>
     
     return <>
+        <CustomTitle title="Login" />
         <div className="w-screen h-screen flex items-center justify-center bg-slate-100">
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-10 pb-8 mb-4 gap-5 flex flex-col">
                 <h1 className="text-2xl font-medium">Login</h1>

@@ -8,6 +8,7 @@ import { BugPhotoModal } from "../components/BugPhotoModal";
 import { EditBugModal } from "../components/EditBugForm.tsx";
 import { BugStatusModal } from "../components/BugStatusModal";
 import { BugDeleteModal } from "../components/BugDeleteModal.tsx";
+import CustomTitle from "../../shared/components/CustomTitle.tsx";
 
 const BugDetailPage = () => {
     const { bug, error, loading  } = getBugById();
@@ -22,11 +23,11 @@ const BugDetailPage = () => {
 
     const fileUploadRef = useRef<HTMLInputElement>(null);
 
-
-    if (loading) return <>Loading...</>;
-    if (error) return <>Could not fetch data</>;
+    if (loading) return <><CustomTitle title="" prefix="B" loading /> Loading...</>;
+    if (error) return <><CustomTitle title="" prefix="B" error />Could not fetch data</>;
 
     return <>
+    <CustomTitle title={bug.title} prefix="B" />
     <div className="h-full w-full pt-14 px-20">
         <h1 className="text-2xl font-medium">{ bug.title }</h1>
         <p className="mt-2">{ bug.description }</p>

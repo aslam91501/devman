@@ -1,5 +1,5 @@
 import { Button, Input, Switch, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
-import { Key, useEffect, useState } from "react";
+import { Key, useEffect, useRef, useState } from "react";
 import {format} from 'timeago.js'
 import getItems from "../hooks/getItems";
 import { Item, ItemType } from "../models";
@@ -19,9 +19,10 @@ export function ItemsTable(props: Props) {
     const [hideDone, setHideDone] = useState(false);
 
     const itemMutation = useItemMutation({ reset: () => setSelectedKeys(new Set([])) });
-
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
+        inputRef.current?.focus();
         if(items)
             setFilteredItems(items.filter(i => i.type === props.type))
     }, [items])
@@ -35,6 +36,7 @@ export function ItemsTable(props: Props) {
         })
 
         setTextValue("");
+        inputRef.current?.focus();
     }
 
     const handleDelete = () => {
@@ -72,7 +74,9 @@ export function ItemsTable(props: Props) {
             topContent={
                 <div className="flex flex-col gap-3">
                     <form onSubmit={handleCreate}>
-                        <Input value={textValue ?? ""} 
+                        <Input
+                            ref={inputRef} 
+                            value={textValue ?? ""} 
                             onChange={(e) => setTextValue(e.target.value)}
                             label="New" type="text" />
                         <input type="submit" className="hidden" disabled={textValue.length < 3} />

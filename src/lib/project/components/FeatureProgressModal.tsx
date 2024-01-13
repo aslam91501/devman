@@ -27,7 +27,7 @@ export const FeatureProgressModal = () => {
             onClose={onClose}
             onOpenChange={onOpenChange}
             title={title}
-            className='max-h-screen'
+            className='max-h-screen bg-slate-50'
             size='4xl'
         >
             <ModalContent>
@@ -50,6 +50,15 @@ export const FeatureProgressModal = () => {
                                     <CardBody className="flex flex-col items-center justify-center gap-3 py-5">
                                         <span>Items</span>
                                         <h1 className="font-medium text-xl">{items.length}</h1>
+                                    </CardBody>
+                                </Skeleton>
+                            </Card>
+
+                            <Card  shadow="md" className={`flex-grow`}>
+                                <Skeleton isLoaded={!loading}>
+                                    <CardBody className="flex flex-col items-center justify-center gap-3 py-5">
+                                        <span>Items Done</span>
+                                        <h1 className="font-medium text-xl">{items.filter(i => i.done).length}</h1>
                                     </CardBody>
                                 </Skeleton>
                             </Card>

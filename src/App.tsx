@@ -11,6 +11,7 @@ import ProjectIndexPage from "./lib/project/pages/project-index";
 import SubFeatureLayout from "./lib/project/layout/subfeature";
 import BugsIndexPage from "./lib/project/pages/bugs-list";
 import BugDetailPage from "./lib/project/pages/bug-detail";
+import AllItemsListPage from "./lib/project/pages/items-list";
 
 function App() {
 	const navigate = useNavigate();
@@ -29,6 +30,8 @@ function App() {
 						<Route path="f/:fid" element={<FeatureListPage />}>
 							<Route path="sf/:sfid" element={<SubFeatureLayout />} />
 						</Route>
+						<Route path="l" element={<AllItemsListPage />} />
+					
 					</Route>
 
 					<Route path="/home" element={<HomePage />} />

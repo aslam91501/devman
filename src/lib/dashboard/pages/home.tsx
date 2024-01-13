@@ -1,8 +1,10 @@
+import CustomTitle from "../../shared/components/CustomTitle"
 import { CreateProjectModal } from "../components/ProjectCreateForm"
 import { ProjectsTable } from "../components/ProjectsTable"
 
 const HomePage = () => {
-    return (
+    return <>
+        <CustomTitle title="Projects" />
         <div className="w-full pt-10 px-20">
             <h1 className="font-medium text-3xl text-primary">Projects</h1>
 
@@ -14,7 +16,7 @@ const HomePage = () => {
                 <ProjectsTable />
             </div>
         </div>
-    )
+    </>
 }
 
 export default HomePage

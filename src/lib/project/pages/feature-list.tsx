@@ -10,6 +10,7 @@ import { Feature } from "../models";
 import { FeatureDeleteModal } from "../components/FeatureDeleteModal";
 import { set } from "zod";
 import { FeatureProgressModal } from "../components/FeatureProgressModal";
+import CustomTitle from "../../shared/components/CustomTitle";
 
 const FeatureListPage = () => {
     const { features, loading, error } = getFeatures();
@@ -69,10 +70,11 @@ const FeatureListPage = () => {
         setFeature(features?.find((feature) => feature.id === key));
     }
 
-    if(error || subFeaturesError) return <>Something went wrong</>
+    if(error || subFeaturesError) return <><CustomTitle title="" prefix="F" error />Something went wrong</>
 
     return (
         <>
+        <CustomTitle title="Features" loading={loading} />
         <div className="basis-80 bg-white border">
             <div className="pt-7 px-5">
                 <Skeleton isLoaded={!loading} >
