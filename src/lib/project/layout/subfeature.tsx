@@ -4,9 +4,11 @@ import { SubFeatureDeleteModal } from "../components/SubFeatureDeleteModal";
 import getSubFeatureById from "../hooks/getSubFeatureById";
 import { ItemsTable } from "../components/ItemsTable";
 import ProgressInfographics from "../components/SubFeatureInfographics";
+import getItems from "../hooks/getItems";
 
 const SubFeatureLayout = () => {
     const { subFeature, loading, error } = getSubFeatureById();
+    const { items, error: itemsError } = getItems();
 
     const { 
         isOpen: editFeatureModalOpen, 
@@ -54,7 +56,7 @@ const SubFeatureLayout = () => {
                         <UpdateSubFeatureModal data={subFeature!} isOpen={editFeatureModalOpen} onClose={editFeatureModalOnClose} />
                         <SubFeatureDeleteModal data={subFeature!} isOpen={deleteFeatureModalOpen} onClose={deleteFeatureModalOnClose} />
                     
-                        <ProgressInfographics />
+                        <ProgressInfographics isError={itemsError} items={items} />
                     </div>
                 </Tab>
 

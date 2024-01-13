@@ -16,7 +16,7 @@ const ProjectLayout = () => {
         { name: 'Features', icon: <GoRocket size={24} />, link: `/p/${pid}/f`},
         { name: 'Task List', icon: <CiBoxList size={24} />, link: `/p/${pid}/l`},
         { name: 'Bugs', icon: <GoBug size={24} />, link: `/p/${pid}/b`},
-        { name: 'Notes', icon: <LiaStickyNoteSolid size={24} />, link: `/p/${pid}/n`},
+        // { name: 'Notes', icon: <LiaStickyNoteSolid size={24} />, link: `/p/${pid}/n`},
         { name: 'Settings', icon: <IoSettingsOutline size={24} />, link: `/p/${pid}/s`}
     ]
 
@@ -30,7 +30,7 @@ const ProjectLayout = () => {
                 ))}            
             </div>
 
-            <div className="flex-grow bg-slate-100 flex">
+            <div className="flex-grow flex">
                 <Outlet />
             </div>
         </div>

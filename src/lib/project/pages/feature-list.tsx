@@ -9,6 +9,7 @@ import { UpdateFeatureModal } from "../components/UpdateFeatureModal";
 import { Feature } from "../models";
 import { FeatureDeleteModal } from "../components/FeatureDeleteModal";
 import { set } from "zod";
+import { FeatureProgressModal } from "../components/FeatureProgressModal";
 
 const FeatureListPage = () => {
     const { features, loading, error } = getFeatures();
@@ -100,11 +101,16 @@ const FeatureListPage = () => {
             <UpdateFeatureModal data={feature!} isOpen={editFeatureModalOpen} onClose={editFeatureModalOnClose} />
             <FeatureDeleteModal data={feature!} isOpen={deleteFeatureModalOpen} onClose={deleteFeatureModalOnClose} />
      
-            { featureSelected &&
+            { featureSelected && <>
             <div className="p-5 flex justify-center items-center gap-4">
                 <Button variant="flat" onClick={() => editFeatureModalOnOpen()} >Update Feature</Button>
                 <Button variant="flat" onClick={() => deleteFeatureModalOnOpen()} className="text-danger">Delete Feature</Button>
             </div>
+
+            <div className="w-full flex flex-col px-5 pb-3">
+                <FeatureProgressModal />
+            </div>
+            </>
             }
 
             { featureSelected &&

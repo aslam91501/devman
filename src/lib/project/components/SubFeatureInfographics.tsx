@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Item } from "../models"
 import getItems from "../hooks/getItems";
-import { Card, CardBody, CircularProgress, Progress } from "@nextui-org/react";
+import { Card, CardBody, CircularProgress, Progress, Skeleton } from "@nextui-org/react";
 
 interface Props{
+    items: Item[]
+    isError: boolean
 }
 
 const ProgressInfographics = (props: Props) => {
-    const { items } = getItems();
+    const { items, isError } = props;
     
     const [loading, setLoading] = useState(true)
 
@@ -45,19 +47,22 @@ const ProgressInfographics = (props: Props) => {
         setLoading(false)
     }, [items])
 
-    if(loading) return <>Loading</>
+    if(isError) return <>Something Went Wrong</>
     return <>
 
-    <Card className="p-7 mt-7" shadow="sm">
-        <Progress
-            value={totalProgress}
-            label="Total Progress"
-            showValueLabel />
-    </Card>
+        <Card className="p-7 mt-7" shadow="md">
+            <Skeleton isLoaded={!loading}>
+                <Progress
+                    value={totalProgress}
+                    label="Total Progress"
+                    showValueLabel />
+            </Skeleton>
+        </Card>
+
     <div className="flex gap-5 mt-7 justify-center w-full">
-        <PercentageCard color="primary" label="Requirements" value={bp} />
-        <PercentageCard color="warning" label="Todo" value={top} />
-        <PercentageCard color="success" label="Tests" value={tp} />
+        <PercentageCard isLoading={loading} color="primary" label="Requirements" value={bp} />
+        <PercentageCard isLoading={loading} color="warning" label="Todo" value={top} />
+        <PercentageCard isLoading={loading} color="success" label="Tests" value={tp} />
     </div>
     </>
 }
@@ -70,21 +75,24 @@ interface PercentageCardProps{
     label: string,
     value: number,
     color?: "danger" | "primary" | "success" | "warning"
+    isLoading?: boolean
 }
 
 const PercentageCard = (props: PercentageCardProps) => {
     return <>
-        <Card className={`flex-grow `} shadow="sm">
-            <CardBody className="flex items-center justify-center py-5">
-                <CircularProgress
-                    label={props.label}
-                    size="lg"
-                    classNames={{ svg: 'h-32 w-32', label: 'text-sm mt-4', value: 'text-sm'}}
-                    value={props.value}
-                    showValueLabel
-                    // color={props.color}
-                />
-            </CardBody>
+        <Card  shadow="md" className={`flex-grow`}>
+            <Skeleton isLoaded={!props.isLoading}>
+                <CardBody className="flex items-center justify-center py-5">
+                    <CircularProgress
+                        label={props.label}
+                        size="lg"
+                        classNames={{ svg: 'h-32 w-32', label: 'text-sm mt-4', value: 'text-sm'}}
+                        value={props.value}
+                        showValueLabel
+                        // color={props.color}
+                    />
+                </CardBody>
+            </Skeleton>
         </Card>
     </>
 }

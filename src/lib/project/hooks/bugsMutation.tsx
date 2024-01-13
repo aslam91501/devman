@@ -3,7 +3,7 @@ import pb from "../../shared/config/pb";
 import { toast } from "react-toastify";
 import usePageData from "../../shared/hooks/usePageData";
 import { Bug, BugStatus } from "../models";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 
 
@@ -18,7 +18,11 @@ const useBugsMutation = (mutationRequest: MutationRequest) => {
     const queryClient = useQueryClient();
 
     const { page, search, size, sort, direction } = usePageData();
-    const queryKey = ['bugs', page, size, sort, direction, search];
+    const [params, setParams] = useSearchParams();
+    const feature = params.get('feature');
+    const status = params.get('status');
+    
+    const queryKey = ['bugs', page, size, sort, direction, search, feature, status];
 
     const navigate = useNavigate();
     const path = useLocation().pathname

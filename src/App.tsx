@@ -22,6 +22,7 @@ function App() {
 				<Route element={<Layout />}>
 					<Route path="/p/:pid" element={<ProjectLayout />}>
 						<Route index element={<ProjectIndexPage />} />
+						<Route path="s" element={<ProjectIndexPage />} />
 						<Route path="b" element={<BugsIndexPage />} />
 						<Route path="b/:bid" element={<BugDetailPage />} />
 						<Route path="f" element={<FeatureListPage />} />

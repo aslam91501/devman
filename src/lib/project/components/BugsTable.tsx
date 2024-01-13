@@ -8,8 +8,9 @@ import {format} from 'timeago.js'
 import { EditBugModal } from "./EditBugForm.tsx";
 import { BugDeleteModal } from "./BugDeleteModal";
 import { BugStatusModal } from "./BugStatusModal.tsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import getFeatures from "../hooks/getFeatures.tsx";
+import { BugStatus } from "../models/index.tsx";
 
 
 
@@ -21,27 +22,46 @@ export function BugsTable() {
     const { isOpen: editModalOpen, toggle: toggleEditModal } = useMultiModal();
     const { isOpen: deleteModalOpen, toggle: toggleDeleteModal } = useMultiModal();
     const { isOpen: statusModalOpen, toggle: toggleStatusModal } = useMultiModal();
-    const { bugs, loading, error, handleSearch } = getBugs();
+    const { bugs, loading, error, handleSearch, handleFilter } = getBugs();
     const { features, loading: featuresLoading, error: featuresError } = getFeatures();
 
+    const [params, setParams] = useSearchParams();
+    
 
     if (loading) return <>Loading...</>;
     if (error) return <>Could not fetch data</>;
     return <>
-        {!featuresError &&
-        <Skeleton isLoaded={!featuresLoading} >
+        <div className="flex items-center gap-7 py-5 px-5 bg-white mb-5 rounded-xl drop-shadow-sm">
+            {/* <span>Filters</span> */}
+            {!featuresError &&
+            <Skeleton isLoaded={!featuresLoading} >
+                <Select
+                    selectedKeys={[params.get('feature') ?? '']}
+                    onChange={(e) => handleFilter({ feature: e.target.value })}
+                    classNames={{ base: "w-60 bg-white" }}
+                    label="Select Feature" 
+                    disabled={featuresLoading}>
+                    { features?.map((feature) => <SelectItem key={feature.id}>
+                            {feature.name}
+                        </SelectItem> 
+                    )}
+                </Select>
+            </Skeleton>
+            }
+            {featuresError && <span>Could not load features</span>}
+
             <Select
-                className="w-60 my-5"
-                label="Select Feature" 
+                selectedKeys={[params.get('status') ?? '']}
+                onChange={(e) => handleFilter({ status: e.target.value as BugStatus })}
+                className="w-60"
+                label="Select Status" 
                 disabled={featuresLoading}>
-                { features?.map((feature) => <SelectItem key={feature.id}>
-                        {feature.name}
-                    </SelectItem> 
-                )}
+                <SelectItem key="unresolved">Unresolved</SelectItem>
+                <SelectItem key="resolved">Resolved</SelectItem>
+                <SelectItem key="triage">Triage</SelectItem>
             </Select>
-        </Skeleton>
-        }
-        {featuresError && <span>Could not load features</span>}
+        </div>
+        
 
         <Table
             topContent={

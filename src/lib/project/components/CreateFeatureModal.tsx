@@ -49,6 +49,7 @@ export const CreateFeatureModal = (props: Props) => {
                     <ModalBody>
                         <form className='flex flex-col gap-5'  onSubmit={handleSubmit(submitData)}>
                             <Input
+                            
                                 label="Feature Name"
                                 isInvalid={!!errors.name}
                                 errorMessage={errors.name?.message}

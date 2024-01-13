@@ -10,7 +10,7 @@ const Layout = () => {
     useEffect(() => redirectIfUnauthenticated(), [])
 
     return (
-        <div className="flex flex-col min-h-screen max-w-full w-screen bg-slate-100">
+        <div className="flex flex-col min-h-screen max-w-full w-screen bg-slate-50">
             <nav className="border-b-1 flex items-center justify-center gap-5 h-10 text-sm bg-white font-mono uppercase">
                 <Link href="/home" color="foreground" >
                     <Tooltip showArrow placement="bottom" content="Home">
